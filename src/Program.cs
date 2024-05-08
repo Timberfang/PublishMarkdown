@@ -7,10 +7,10 @@ namespace PublishMarkdown
         static void Main()
         {
             Regex StripYAMLRegex = StripYAML();
-            Regex StripHeadingsRegex = StripHeadings();
+            Regex StripHeadingRegex = StripHeading();
             Regex StripWikiLinksRegex = StripWikiLinks();
             Regex StripLinksRegex = StripLinks();
-            Regex StripCopyrightRegex = StripCopyright();
+            Regex StripFooterRegex = StripFooter();
 
             StreamReader TextStream = new StreamReader(@".\test.txt");
             string StreamContents = TextStream.ReadToEnd();
@@ -18,8 +18,8 @@ namespace PublishMarkdown
             // Remove YAML frontmatter
             StreamContents = StripYAMLRegex.Replace(StreamContents, "");
 
-            // Remove headings
-            StreamContents = StripHeadingsRegex.Replace(StreamContents, "");
+            // Remove heading(s)
+            StreamContents = StripHeadingRegex.Replace(StreamContents, "");
 
             // Remove wikilinks
             StreamContents = StripWikiLinksRegex.Replace(StreamContents, "");
@@ -27,8 +27,8 @@ namespace PublishMarkdown
             // Remove external links
             StreamContents = StripLinksRegex.Replace(StreamContents, "");
 
-            // Remove copyright notice
-            StreamContents = StripCopyrightRegex.Replace(StreamContents, "");
+            // Remove footer
+            StreamContents = StripFooterRegex.Replace(StreamContents, "");
 
             // Write output
             File.WriteAllText(@".\output.txt", StreamContents);
@@ -38,9 +38,9 @@ namespace PublishMarkdown
         [GeneratedRegex(@"^(---)([\s\S]*?)(---)(\s*)", RegexOptions.Multiline)]
         private static partial Regex StripYAML();
 
-        // Match Markdown headings
+        // Match Markdown heading(s)
         [GeneratedRegex(@"^(#.*\s*)", RegexOptions.Multiline)]
-        private static partial Regex StripHeadings();
+        private static partial Regex StripHeading();
 
         // Match Obsidian [[wikilinks]]
         // TODO: Remove only double brackets, not text inside
@@ -52,9 +52,9 @@ namespace PublishMarkdown
         [GeneratedRegex(@"(\[.*\])(\(.*?\))(\s*)")]
         private static partial Regex StripLinks();
 
-        // Match my copyright notice
+        // Match my style of footer
         [GeneratedRegex(@"(\s*)(---)(\s*)(.*)")]
-        private static partial Regex StripCopyright();
+        private static partial Regex StripFooter();
     }
     
 }
