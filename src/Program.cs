@@ -43,13 +43,11 @@ namespace PublishMarkdown
         private static partial Regex StripHeading();
 
         // Match Obsidian [[wikilinks]]
-        // TODO: Remove only double brackets, not text inside
-        [GeneratedRegex(@"(\[\[)(.*?)(\]\])(\s*)")]
+        [GeneratedRegex(@"(\[\[)|(\]\])")]
         private static partial Regex StripWikiLinks();
 
         // Match regular Markdown links
-        // TODO: Match everything BUT anchor text
-        [GeneratedRegex(@"(\[.*\])(\(.*?\))(\s*)")]
+        [GeneratedRegex(@"(\[|\])|(\(.*?\))")]
         private static partial Regex StripLinks();
 
         // Match my style of footer
