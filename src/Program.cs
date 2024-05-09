@@ -71,7 +71,7 @@ namespace PublishMarkdown
         private static partial Regex StripLinks();
 
         // Match my style of footer
-        [GeneratedRegex(@"(\s*)(---)(\s*)(.*)")]
+        [GeneratedRegex(@"(\s*)(---)(\s*)(.*)$")]
         private static partial Regex StripFooter();
     }
 }
