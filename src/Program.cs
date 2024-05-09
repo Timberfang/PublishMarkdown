@@ -6,13 +6,26 @@ namespace PublishMarkdown
     {
         static void Main()
         {
+            CleanText(@".\test-input.txt");
+            if (TestClean(@".\test-output.txt", @".\test-validate.txt"))
+            {
+                Console.WriteLine("Tests passed!");
+            }
+            else
+            {
+                Console.WriteLine("Tests failed!");
+            }
+        }
+
+        static void CleanText(string FilePath)
+        {
             Regex StripYAMLRegex = StripYAML();
             Regex StripHeadingRegex = StripHeading();
             Regex StripWikiLinksRegex = StripWikiLinks();
             Regex StripLinksRegex = StripLinks();
             Regex StripFooterRegex = StripFooter();
 
-            StreamReader TextStream = new StreamReader(@".\test.txt");
+            StreamReader TextStream = new StreamReader(FilePath);
             string StreamContents = TextStream.ReadToEnd();
 
             // Remove YAML frontmatter
@@ -31,7 +44,22 @@ namespace PublishMarkdown
             StreamContents = StripFooterRegex.Replace(StreamContents, "");
 
             // Write output
-            File.WriteAllText(@".\output.txt", StreamContents);
+            File.WriteAllText(@".\test-output.txt", StreamContents);
+        }
+
+        static bool TestClean(string InputFile, string ValidateFile)
+        {
+            StreamReader InputStream = new StreamReader(InputFile);
+            StreamReader ValidateStream = new StreamReader(ValidateFile);
+
+            if (InputStream.ReadToEnd().SequenceEqual(ValidateStream.ReadToEnd()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         // Match YAML frontmatter
@@ -54,5 +82,4 @@ namespace PublishMarkdown
         [GeneratedRegex(@"(\s*)(---)(\s*)(.*)")]
         private static partial Regex StripFooter();
     }
-    
 }
