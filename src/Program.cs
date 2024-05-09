@@ -21,7 +21,6 @@ namespace PublishMarkdown
         {
             Regex StripYAMLRegex = StripYAML();
             Regex StripHeadingRegex = StripHeading();
-            Regex StripWikiLinksRegex = StripWikiLinks();
             Regex StripLinksRegex = StripLinks();
             Regex StripFooterRegex = StripFooter();
 
@@ -34,10 +33,7 @@ namespace PublishMarkdown
             // Remove heading(s)
             StreamContents = StripHeadingRegex.Replace(StreamContents, "");
 
-            // Remove wikilinks
-            StreamContents = StripWikiLinksRegex.Replace(StreamContents, "");
-
-            // Remove external links
+            // Remove links
             StreamContents = StripLinksRegex.Replace(StreamContents, "");
 
             // Remove footer
@@ -70,11 +66,7 @@ namespace PublishMarkdown
         [GeneratedRegex(@"^(#.*\s*)", RegexOptions.Multiline)]
         private static partial Regex StripHeading();
 
-        // Match Obsidian [[wikilinks]]
-        [GeneratedRegex(@"(\[\[)|(\]\])")]
-        private static partial Regex StripWikiLinks();
-
-        // Match regular Markdown links
+        // Match links
         [GeneratedRegex(@"(\[|\])|(\(.*?\))")]
         private static partial Regex StripLinks();
 
