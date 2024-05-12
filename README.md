@@ -1,0 +1,3 @@
+# PublishMarkdown
+
+This is a (very WIP) attempt at creating a standalone tool for formatting my writing. I (currently) use Obsidian with the [Longform](https://github.com/kevboh/longform) plugin for my writing. As a set of Markdown files, written scene-by-scene, each has their own formatting (e.g., YAML frontmatter, header, footer, links, etc.). This program will extract the body of the text in each file, combine the text into a single manuscript file, and add final formatting to create a full version of the work. This can then be converted using tools such as Pandoc into publish-ready formats.
