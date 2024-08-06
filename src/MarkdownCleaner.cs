@@ -8,25 +8,17 @@ namespace PublishMarkdown
 
         public void CleanText()
         {
-            Regex MatchYAMLRegex = MatchYAML();
-            Regex MatchHeaderRegex = MatchHeader();
-            Regex AnchorTextRegex = AnchorText();
-            Regex MatchExternalLinksRegex = MatchExternalLinks();
-            Regex MatchInternalLinksRegex = MatchInternalLinks();
-            Regex MatchFooterRegex = MatchFooter();
-            Regex LinebreaksRegex = Linebreaks();
-
-            StreamReader TextStream = new StreamReader(InputFile);
-            string StreamContents = TextStream.ReadToEnd();
+            // Read input file
+            string StreamContents = File.ReadAllText(InputFile);
 
             // Remove YAML frontmatter, headers, internal & extenral links, and footers
             // TODO: Can this be optimized using a StringBuilder?
-            StreamContents = MatchYAMLRegex.Replace(StreamContents, "");
-            StreamContents = MatchHeaderRegex.Replace(StreamContents, "");
-            StreamContents = SubStringReplace(StreamContents, MatchExternalLinksRegex, AnchorTextRegex);
-            StreamContents = SubStringReplace(StreamContents, MatchInternalLinksRegex, AnchorTextRegex);
-            StreamContents = MatchFooterRegex.Replace(StreamContents, "");
-            StreamContents = LinebreaksRegex.Replace(StreamContents, "");
+            StreamContents = MatchYAML().Replace(StreamContents, "");
+            StreamContents = MatchHeader().Replace(StreamContents, "");
+            StreamContents = SubStringReplace(StreamContents, MatchExternalLinks(), AnchorText());
+            StreamContents = SubStringReplace(StreamContents, MatchInternalLinks(), AnchorText());
+            StreamContents = MatchFooter().Replace(StreamContents, "");
+            StreamContents = Linebreaks().Replace(StreamContents, "");
             StreamContents += Environment.NewLine;
 
             // Write output
@@ -38,14 +30,8 @@ namespace PublishMarkdown
             StreamReader InputStream = new StreamReader(InputFile);
             StreamReader ValidateStream = new StreamReader(ValidateFile);
 
-            if (InputStream.ReadToEnd().SequenceEqual(ValidateStream.ReadToEnd()))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (InputStream.ReadToEnd().SequenceEqual(ValidateStream.ReadToEnd())) { return true; }
+            else { return false; }
         }
         
         private static string SubStringReplace(string Input, Regex StringPattern, Regex SubPattern)
