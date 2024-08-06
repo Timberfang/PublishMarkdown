@@ -19,7 +19,6 @@ namespace PublishMarkdown
             StreamContents = SubStringReplace(StreamContents, MatchInternalLinks(), AnchorText());
             StreamContents = MatchFooter().Replace(StreamContents, "");
             StreamContents = Linebreaks().Replace(StreamContents, "");
-            StreamContents += Environment.NewLine;
 
             // Write output
             File.WriteAllText(@".\test-output.txt", StreamContents);
