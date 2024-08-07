@@ -4,4 +4,4 @@ This is a (very WIP) attempt at creating a standalone tool for formatting my wri
 
 ## Usage
 
-For now, this will process files in alphabetical order. I use the naming scheme `{ChapterNumber}-{SceneNumber}-{SceneName}` for each file. If it marks a new chapter, it will be marked as "scene 0", like so: `{ChapterNumber}-{00}-{ChapterName}`. In the future, I'd like to extract this information from the YAML frontmatter, but that's not implemented yet.
+For now, this will process files in alphabetical order. I use the naming scheme `{ChapterNumber}-{SceneNumber}-{SceneName}` for each file. If it marks a new chapter, it will be marked as "scene 0", like so: `{ChapterNumber}-{00}-{ChapterName}`. In the future, I'd like to consider other options, but this is the plan for now.
