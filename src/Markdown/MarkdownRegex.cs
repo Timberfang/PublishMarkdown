@@ -1,6 +1,5 @@
-using System.Text.RegularExpressions;
-
-namespace PublishMarkdown;
+﻿using System.Text.RegularExpressions;
+namespace PublishMarkdown.Markdown;
 
 public static partial class MarkdownRegex
 {
@@ -16,6 +15,4 @@ public static partial class MarkdownRegex
     public static partial Regex ExternalLinks();
     [GeneratedRegex(@"\[\[.*?\]\]")]
     public static partial Regex InternalLinks();
-    [GeneratedRegex(@"(---)(\s*)(.*)$")]
-    public static partial Regex Footer();
 }
