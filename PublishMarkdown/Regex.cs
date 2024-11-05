@@ -9,8 +9,8 @@ internal static partial class MarkdownRegex
 		// Is there a more performant way of handling this?
 		input = FrontMatterRegex().Replace(input, string.Empty);
 		input = HeaderRegex().Replace(input, string.Empty);
-		input = HyperlinkRegex().Replace(input, m => m.Value.Replace(m.Groups[1].Value, string.Empty));
-		input = WikiLinkRegex().Replace(input, m => m.Value.Replace(m.Groups[1].Value, string.Empty));
+		input = HyperlinkRegex().Replace(input, @"$1");
+		input = WikiLinkRegex().Replace(input, @"$1");
 		return input;
 	}
 
@@ -24,12 +24,12 @@ internal static partial class MarkdownRegex
 	private static partial Regex HeaderRegex();
 
 	// Links: Match exactly one '[' character and exactly one ']' character, followed by a '(' character, zero or more other characters, then a ')' character.
-	// NOTE: Match *only* group 0.
+	// NOTE: Match *only* group 1.
 	[GeneratedRegex(@"\[(.*?)\]\(.*?\)", RegexOptions.Compiled)]
 	private static partial Regex HyperlinkRegex();
 
 	// Obsidian Wikilinks: Match exactly two '[' characters and exactly two ']' characters.
-	// NOTE: Match *only* group 0.
+	// NOTE: Match *only* group 1.
 	[GeneratedRegex(@"\[{2}(.*?)\]{2}", RegexOptions.Compiled)]
 	private static partial Regex WikiLinkRegex();
 }
